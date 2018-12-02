@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
+from functools import reduce
+
 with open('./input.txt') as f:
-    txt = f.read()
+    freq = f.read().splitlines()
 
-num = 0
-for l in txt.splitlines():
-    num += int(l)
+num = reduce(lambda x, y: x + int(y), freq, 0)
 
-print(num)
+print(f'Sum of frequencies {num}')
