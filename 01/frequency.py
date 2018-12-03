@@ -1,10 +1,24 @@
 #!/usr/bin/env python
 
-from functools import reduce
-
 with open('./input.txt') as f:
-    freq = f.read().splitlines()
+    freq = [int(l) for l in f.read().splitlines()]
 
-num = reduce(lambda x, y: x + int(y), freq, 0)
+print(f'Sum of frequencies: {sum(freq)}')
 
-print(f'Sum of frequencies {num}')
+
+def freq_gen():
+    while True:
+        for f in freq:
+            yield f
+
+
+reached = set()
+freq_sum = 0
+for f in freq_gen():
+    freq_sum += f
+    if freq_sum in reached:
+        break
+    else:
+        reached.add(freq_sum)
+
+print(f'First reached twice: {freq_sum}')
