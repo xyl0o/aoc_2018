@@ -2,14 +2,14 @@
 
 import sys
 
-import numpy as np
-
 from functools import reduce
+
+import numpy as np
 
 from typing import Tuple
 
+
 Claim = Tuple[int, int, int, int, int]
-Shape = Tuple[int, int]
 
 
 def parse_claim(line: str) -> Claim:
@@ -36,3 +36,10 @@ if __name__ == '__main__':
         sum_array[x:x + w, y: y + h] += 1
 
     print(f'Square inches with >= 2 claims: {np.sum(sum_array >= 2)}')
+
+    for cid, x, y, w, h in claims:  # python is fast enough to be dumb
+        if (sum_array[x:x + w, y: y + h] == 1).all():
+            break
+
+    print(f'First claim which does not overlap: {cid}')
+
