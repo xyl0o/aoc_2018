@@ -1,24 +1,26 @@
 #!/usr/bin/env python
 
-with open('./input.txt') as f:
-    freq = [int(l) for l in f.read().splitlines()]
+import sys
 
-print(f'Sum of frequencies: {sum(freq)}')
-
-
-def freq_gen():
-    while True:
-        for f in freq:
-            yield f
+from itertools import cycle
 
 
-reached = set()
-freq_sum = 0
-for f in freq_gen():
-    freq_sum += f
-    if freq_sum in reached:
-        break
-    else:
-        reached.add(freq_sum)
+if __name__ == '__main__':
 
-print(f'First reached twice: {freq_sum}')
+    with open(sys.argv[1]) as f:
+        lines = f.read().splitlines()
+
+    changes = [int(l) for l in lines]
+
+    print(f'Resulting frequency: {sum(changes)}')
+
+    reached: set = set()
+    frequency = 0
+    for change in cycle(changes):
+        frequency += change
+        if frequency in reached:
+            break
+        else:
+            reached.add(frequency)
+
+    print(f'First reached twice: {frequency}')
